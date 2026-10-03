@@ -14,11 +14,11 @@ app = FastAPI(
     docs_url="/docs"
 )
 
-# Set up CORS middleware with regex pattern matching all local dev ports
+# Set up CORS middleware with regex pattern matching local dev ports and Vercel production domains
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:\d+)?",
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1|.*\.vercel\.app|.*\.onrender\.com)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
