@@ -1,79 +1,91 @@
-# DecisionOS - Autonomous AI Research & Decision-Support Engine
+# DecisionOS — Autonomous AI Research & Decision-Support Engine
 
-DecisionOS is an AI-powered autonomous research and decision-support application that converts natural language research goals into verified decision reports by analyzing real-time web evidence, detecting conflicting claims, and evaluating trade-offs.
-
----
-
-## 🛠️ Architecture & Tech Stack
-
-- **Frontend**: React, TypeScript, Vite, Tailwind CSS (Off-white/beige aesthetic system)
-- **Backend**: Python, FastAPI, Pydantic v2, SQLAlchemy
-- **Search Engine**: SerpApi (Backend integration for organic web, Google Shopping, and YouTube)
-- **Database**: SQLite (modular design, ready for PostgreSQL upgrade)
-- **AI/LLM Layer**: Configurable LLM provider interface (OpenAI, Groq, Anthropic, Gemini)
+DecisionOS is an evidence-based autonomous decision assistant. It converts natural language research goals into clear, scannable decision briefs by analyzing real-time web evidence via SerpApi, detecting conflicting claims, and evaluating trade-offs.
 
 ---
 
-## 🔑 Obtaining a SerpApi API Key
+## 🌐 Live Application Links
 
-1. Visit [https://serpapi.com](https://serpapi.com) and register for an account.
-2. Log in and navigate to your **Dashboard**.
-3. Copy your private **API Key**.
-4. **Important**: Store `SERPAPI_API_KEY` *only* in your backend `.env` file. Never expose or commit this key to the frontend.
+- **Frontend Application (Vercel)**: [https://decisionos-er35i84uv-harmohinis-projects.vercel.app/](https://decisionos-er35i84uv-harmohinis-projects.vercel.app/)
+- **Backend API (Render)**: [https://decisionos-2.onrender.com](https://decisionos-2.onrender.com)
+- **API Documentation (Swagger UI)**: [https://decisionos-2.onrender.com/docs](https://decisionos-2.onrender.com/docs)
+- **GitHub Repository**: [https://github.com/harmohini/DecisionOS](https://github.com/harmohini/DecisionOS)
 
 ---
 
-## ⚙️ Environment Setup
+## 🌟 Key Features & UX Design
 
-1. Copy `.env.example` to create your local `.env` file:
+- **Concise Consumer Experience**: Understand research results in **30–60 seconds**.
+- **Your Decision Brief**: Short, scannable summary highlighting *Looking for*, *Budget*, *Must-haves*, and *Main trade-offs*.
+- **Top Options**: Capped at maximum 6 compact option cards with *Best for* labels, *Why it fits* bullets (`✓`), and *Watch out* lines.
+- **Key Findings**: Top evidence-backed insights (`✓`).
+- **Check Before Buying**: Identifies reported specification disagreements or price variations across sources.
+- **Before You Decide**: Verification checklist items (`☐`) prior to purchasing.
+- **Source Traceability**: Collapsible sources list (`[ View sources ]`) connecting claims to original web sources.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS (Clean warm beige/off-white aesthetic system)
+- **Backend**: Python 3.13, FastAPI, Pydantic v2, SQLAlchemy
+- **Search Engine**: SerpApi (Backend integration for Google Search, Google Shopping, and YouTube)
+- **Database**: SQLite (modular design, PostgreSQL ready)
+- **LLM Layer**: Configurable LLM provider interface (OpenAI, Groq, Anthropic, Gemini)
+
+---
+
+## 🔑 Environment Configuration
+
+1. Copy `.env.example` to create your `.env` file:
    ```bash
    cp .env.example .env
    ```
-2. Open `.env` and set your key:
+2. Set your environment variables in `.env`:
    ```env
    SERPAPI_API_KEY=your_actual_serpapi_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
 
 ---
 
-## 🚀 Running the Application
+## 🚀 Local Development Setup
 
 ### 1. Backend Server Setup & Start
 
 ```bash
 cd backend
 
-# Create virtual environment & install dependencies (if not already done)
+# Create virtual environment & install dependencies
 python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
 
-# Start FastAPI development server
-./venv/bin/uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# Start FastAPI server
+PYTHONPATH=. ./venv/bin/uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-- API Documentation: `http://localhost:8000/docs`
-- Health Endpoint: `http://localhost:8000/health`
-- Backend Search Test Endpoint: `http://localhost:8000/api/v1/search/test?q=laptop+for+AI+programming&engine=google`
+- API Health Check: `http://127.0.0.1:8000/api/v1/health`
+- API Documentation: `http://127.0.0.1:8000/docs`
 
-### 2. Frontend Development Server
+### 2. Frontend Application Setup & Start
 
 ```bash
 cd frontend
 
-# Install node packages (if not already done)
+# Install Node modules
 npm install
 
 # Start Vite dev server
-npm run dev
+npm run dev -- --port 5173
 ```
 
-- Web Interface: `http://localhost:5173`
+- Local Interface: `http://localhost:5173`
 
 ---
 
-## 🧪 Running Unit Tests
+## 🧪 Unit & Integration Tests
 
-Backend unit tests use mocked HTTP responses so they do not consume your real SerpApi search quota:
+Run the complete 91-test suite locally (uses mocked search responses to preserve search API quotas):
 
 ```bash
 cd backend
@@ -84,6 +96,6 @@ PYTHONPATH=. ./venv/bin/pytest tests/
 
 ## 🔒 Security Principles
 
-- **No Exposed API Keys**: `SERPAPI_API_KEY` is loaded strictly by backend Python modules.
-- **No Dummy Data**: Live web results are normalized into python dictionaries/schemas (`NormalizedSearchResponse`).
-- **Explainable Decision Reports**: Claims link directly to verified web sources.
+- **Zero Key Exposure**: `SERPAPI_API_KEY` and `OPENAI_API_KEY` are executed strictly on the backend.
+- **No Mock Data**: Real web research results are retrieved, normalized, and scored against requirements.
+- **Provenance Preservation**: Every claim and product recommendation links directly to verified source URLs.
