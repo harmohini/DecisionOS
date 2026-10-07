@@ -86,10 +86,10 @@ export const Home: React.FC<HomeProps> = () => {
             <button
               onClick={handleStartResearch}
               disabled={isResearching || !query.trim()}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-stone-900 text-sand-50 font-medium text-base flex items-center justify-center space-x-2 hover:bg-stone-800 transition-all shadow-warm-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-amber-500 text-stone-950 font-semibold text-base flex items-center justify-center space-x-2 hover:bg-amber-600 transition-all shadow-warm-sm disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed"
             >
               <span>Research my decision</span>
-              <ArrowRight className="w-4 h-4 text-amber-400" />
+              <ArrowRight className="w-4 h-4 text-stone-950" />
             </button>
           </div>
 
@@ -98,13 +98,13 @@ export const Home: React.FC<HomeProps> = () => {
             <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
               Try an example
             </span>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+            <div className="flex flex-col space-y-2">
               {examplePrompts.map((promptText, pIdx) => (
                 <button
                   key={pIdx}
                   type="button"
                   onClick={() => setQuery(promptText)}
-                  className="text-left text-xs text-stone-700 hover:text-amber-900 bg-sand-100/70 hover:bg-sand-200/70 px-3 py-2 rounded-lg border border-sand-200 transition-colors leading-relaxed"
+                  className="w-full text-left text-xs text-stone-700 hover:text-amber-950 bg-sand-100/70 hover:bg-sand-200/70 px-3.5 py-2.5 rounded-lg border border-sand-200 transition-colors leading-relaxed"
                 >
                   • {promptText}
                 </button>
